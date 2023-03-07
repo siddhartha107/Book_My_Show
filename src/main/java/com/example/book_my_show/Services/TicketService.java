@@ -79,6 +79,11 @@ public class TicketService {
 
 
         //Save the parent
+
+        ticket = ticketRepository.save(ticket);
+
+
+        
         List<Ticket> ticketList = show.getListOfBookedTickets();
         ticketList.add(ticket);
         show.setListOfBookedTickets(ticketList);

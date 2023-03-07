@@ -5,6 +5,7 @@ import com.example.book_my_show.EntryDtos.ShowEntryDto;
 import com.example.book_my_show.Enums.SeatType;
 import com.example.book_my_show.Models.*;
 import com.example.book_my_show.Repository.MovieRepository;
+import com.example.book_my_show.Repository.ShowRepository;
 import com.example.book_my_show.Repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class ShowService {
 
     @Autowired
     TheaterRepository theaterRepository;
+
+    @Autowired
+    ShowRepository showRepository;
 
 
     public String addShow(ShowEntryDto showEntryDto){
@@ -41,16 +45,13 @@ public class ShowService {
         show.setListOfShowSeats(showSeatList);
 
 
-        List<Show> showList =  movie.getShowList();
-        showList.add(show);
-        movie.setShowList(showList);
+        show = showRepository.save(show);
+
+
+        movie.getShowList().add(show);
+        theater.getShowList().add(show);
 
         movieRepository.save(movie);
-
-
-        List<Show> showList1 = theater.getShowList();
-        showList1.add(show);
-        theater.setShowList(showList1);
 
         theaterRepository.save(theater);
 
